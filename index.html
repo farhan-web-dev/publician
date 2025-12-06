@@ -298,6 +298,69 @@
           background: 0 0;
         }
       }
+      /* Critical: Publish section above-the-fold styles */
+      .publish-section {
+        text-align: center;
+      }
+      .publish-section h2 {
+        font-weight: 700;
+        font-size: clamp(1.2rem, 3vw, 2.75rem);
+        line-height: 3.375rem;
+      }
+      .publish-section h2 + p {
+        font-weight: 700;
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+        line-height: 22px;
+        margin: 1.625rem 0 2.875rem;
+      }
+      .publish-tabs {
+        overflow: hidden;
+      }
+      .tabs-controls {
+        border: 2px solid var(--primary-color-500);
+        border-radius: 4px;
+        display: inline-grid;
+        width: 270px;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      @media (min-width: 667px) {
+        .tabs-controls {
+          width: auto;
+          grid-template-columns: auto auto;
+        }
+      }
+      .tabs-controls__button {
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+        color: var(--primary-color-500);
+        padding: 6px;
+      }
+      @media (min-width: 667px) {
+        .tabs-controls__button {
+          padding: 6px 40px;
+        }
+      }
+      .tabs-controls__button.is-active {
+        color: var(--color-white);
+      }
+      .tabs-controls__active-tab {
+        background: var(--publish-button);
+        border-radius: 4px;
+        height: calc(100% + 4px);
+        position: absolute;
+        z-index: 1;
+        width: calc(100% + 2px);
+        top: -2px;
+        right: 0;
+        grid-column: 1/2;
+      }
     </style>
     <link
       rel="apple-touch-icon"
@@ -307,6 +370,43 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!-- Preload critical hero background image for LCP -->
+    <link rel="preload" as="image" href="img/bg.webp" type="image/webp" />
+    <!-- <link rel="preload" as="image" href="img/bg.png" type="image/png" /> -->
+    <!-- Critical menu script - loads immediately -->
+    <script src="js/menu.js" defer></script>
+    <!-- Lazy load non-critical scripts after user interaction -->
+    <script>
+      // Lazy load non-critical JavaScript after first user interaction or scroll
+      (function () {
+        let loaded = false;
+        const loadNonCritical = function () {
+          if (loaded) return;
+          loaded = true;
+
+          // Load non-critical scripts
+          const scripts = ["js/easy-toggler.js", "js/tabs.js", "js/forms.js"];
+
+          scripts.forEach(function (src) {
+            const script = document.createElement("script");
+            script.src = src;
+            script.defer = true;
+            document.body.appendChild(script);
+          });
+        };
+
+        // Load on first scroll, click, touch, or keypress
+        ["scroll", "click", "touchstart", "keydown"].forEach(function (event) {
+          window.addEventListener(event, loadNonCritical, {
+            once: true,
+            passive: true,
+          });
+        });
+
+        // Fallback: load after 3 seconds if no interaction
+        setTimeout(loadNonCritical, 3000);
+      })();
+    </script>
   </head>
 
   <body>
@@ -1618,6 +1718,6 @@
         </div>
       </footer>
     </div>
-    <script src="js/main.min.js" defer></script>
+    <!-- Removed main.min.js - now using split modules loaded above -->
   </body>
 </html>
