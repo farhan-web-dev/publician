@@ -1145,6 +1145,21 @@ button {
     url("../img/promo-feat/feat-4.png") 1x
   );
 }
+.publish-section {
+  margin-top: 50px;
+  position: relative;
+  z-index: 2;
+}
+@media (min-width: 767px) {
+  .publish-section {
+    margin-top: 100px;
+  }
+}
+@media (min-width: 1340px) {
+  .publish-section {
+    margin-top: 150px;
+  }
+}
 .publish-section h2 + p {
   margin: 1.625rem 0 2.875rem;
 }
