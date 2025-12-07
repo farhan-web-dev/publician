@@ -137,8 +137,9 @@ button {
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     min-width: 1920px;
-    aspect-ratio: 1920/966;
-    min-height: 1188px;
+    width: 100%;
+    aspect-ratio: 16/9;
+    min-height: auto;
     height: auto;
     top: 0;
     background-repeat: no-repeat;
@@ -172,6 +173,7 @@ button {
 }
 .section {
   text-align: center;
+  min-height: 300px;
 }
 
 .section h2 {
@@ -204,7 +206,7 @@ button {
   font-size: 1.25rem;
   line-height: 1.5rem;
   color: var(--color-white);
-  padding: 5px 15px;
+  padding: 14px 32px;
 }
 
 @media (hover: hover), screen and (min-width: 0\0) {
@@ -374,6 +376,7 @@ button {
   z-index: 1;
   visibility: visible;
   opacity: 1;
+  position: relative;
 }
 
 .publish-card {
@@ -474,6 +477,9 @@ button {
   display: flex;
   border-radius: 50%;
   overflow: hidden;
+  width: 37px;
+  height: 37px;
+  aspect-ratio: 1/1;
 }
 
 .lang-select__selected-text {
@@ -1440,16 +1446,7 @@ button {
   font-size: 16px;
   line-height: 20px;
   color: var(--primary-color-500);
-  padding: 6px;
-}
-
-@media (min-width: 667px) {
-  .tabs-controls__button {
-    padding: 6px 40px;
-  }
-}
-.tabs-controls__button.is-active {
-  color: var(--color-white);
+  padding: 14px 32px;
 }
 
 .tabs-controls__button.is-active[data-index="1"] ~ .tabs-controls__active-tab {
